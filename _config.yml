@@ -89,7 +89,7 @@ lastfm_id: # your lastfm id
 lattes_id: # your ID on Lattes (Brazilian Lattes CV)
 linkedin_username: danilov-d # your LinkedIn user name
 mastodon_username: infosec.exchange/@soxoj # your mastodon instance+username in the format instance.tld/@username
-medium_username: soxoj # your Medium username
+medium_username: # your Medium username
 orcid_id: # your ORCID ID
 osf_id: # your OSF ID
 pinterest_id: # your pinterest id
@@ -134,8 +134,8 @@ bing_site_verification: # out your bing-site-verification ID (Bing Webmaster)
 # Blog
 # -----------------------------------------------------------------------------
 
-blog_name: Soxoj's blog # blog_name will be displayed in your blog page
-blog_description: Posts and articles from Medium and Substack. For the latest updates, check out my Telegram channel @soxoj_insides and my LinkedIn.
+blog_name: # blog_name will be displayed in your blog page
+blog_description: Posts and articles from my Medium and Substack. For the latest updates, check out my Telegram channel @soxoj_insides and my LinkedIn.
 permalink: /blog/:year/:title/
 lsi: false # produce an index for related posts
 
@@ -411,7 +411,7 @@ imagemagick:
     - ".tiff"
     - ".gif"
   output_formats:
-    webp: "-quality 85"
+    webp: "-quality 95"
 
 # Lazy loading images
 #   If you enable lazy loading, all images will add the loading="lazy" attribute.
