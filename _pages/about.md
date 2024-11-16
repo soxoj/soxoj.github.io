@@ -1,25 +1,42 @@
 ---
 layout: about
-title: about
+title: Soxoj
 permalink: /
-subtitle: <a href='#'>Affiliations</a>. Address. Contacts. Motto. Etc.
+subtitle: 
 
 profile:
   align: right
   image: prof_pic.jpg
   image_circular: false # crops the image to make it circular
   more_info: >
-    <p>555 your office number</p>
-    <p>123 your address street</p>
-    <p>Your City, State 12345</p>
+    <p>Amsterdam, Netherlands</p>
 
-news: true # includes a list of news items
-selected_papers: true # includes a list of papers marked as "selected={true}"
+news: false # includes a list of news items
+selected_papers: false # includes a list of papers marked as "selected={true}"
 social: true # includes social icons at the bottom of the page
 ---
 
-Write your biography here. Tell the world about yourself. Link to your favorite [subreddit](http://reddit.com). You can put a picture in, too. The code is already in, just name your picture `prof_pic.jpg` and put it in the `img/` folder.
+I am an **[OSINT](https://www.sans.org/blog/what-is-open-source-intelligence/) specialist** with a background in cybersecurity and software development. 🔐 
 
-Put your address / P.O. box / other info right below your picture. You can also disable any of these elements by editing `profile` property of the YAML header of your `_pages/about.md`. Edit `_bibliography/papers.bib` and Jekyll will render your [publications page](/al-folio/publications/) automatically.
+⚒️ I started getting into open-source intelligence in 2015 by playing CTFs and ARGs and making [information-gathering and processing tools](https://github.com/stars/soxoj/lists/my-osint-tools).
 
-Link to your social media connections, too. This theme is set up to use [Font Awesome icons](https://fontawesome.com/) and [Academicons](https://jpswalsh.github.io/academicons/), like the ones below. Add your Facebook, Twitter, LinkedIn, Google Scholar, or just disable all of them.
+🎙️ Since 2018 I've been talking about OSINT, search methods, and privacy at public events. I was a speaker at large international conferences: leHACK, Osintomatico and ISS WORLD Europe / Middle East. Also, I prepared and conducted two training courses about open-source intelligence for cybersec students and private investigators. You can look at some of my talks in [this YouTube playlist](https://www.youtube.com/playlist?list=PLskYWMG4mV-6osVePbwJa2Tp2Bc2EUI1p).
+
+🎥 In 2020 I founded the **OSINT mindset community** ([first post](https://t.me/osint_mindset/5), [first meetup](https://t.me/osint_mindset/94)). The community has more than 20K subscribers, 4K members of [Investigation Forum](https://forum.osint-mindset.com), and dozens of active members and speakers in 3 countries and 5 cities. You can watch [records of meetup talks](https://www.youtube.com/playlist?list=PLskYWMG4mV-7A2tKggMryk18tbwC7jLhX) on YouTube, [listen to OSINT mindset podcasts](https://osint-mindset.mave.digital/) on various platforms, and [read the excellent wiki](https://osint-mindset.gitbook.io) on Gitbook.
+
+## 💼 Experience
+
+🕵🏽 Currently, I am head of the OSINT Center of Excellence in [Social Links](https://sociallinks.io/). Guys from my department conduct investigations, teach OSINT and help to develop new methods and tools.
+
+⚒️ I have experience in cybersecurity (antibot/anti-fraud protection, pentest), software development (mostly Python, also Go, Lua), building of development processes (Scrum, Kanban), and people management.
+
+✍️ You can find my articles, guides, and just thoughts on [**Substack**](https://soxoj.substack.com/), [Medium (old)](https://soxoj.medium.com/), in [Twitter](https://twitter.com/Sox0j), the Telegram channels [Soxoj insides](https://t.me/soxoj_insides) and [OSINT mindset (old posts)](https://t.me/osint_mindset), and, of course, [in GitHub list of my guides and collections](https://github.com/stars/soxoj/lists/my-guides-and-collections).
+
+## 🚧 Some projects
+
+- [Maigret](https://github.com/soxoj/maigret) - a username checker collecting a dossier on a person by username from 3000+ sites (9K stars on GitHub)
+- [Adana](https://adana.soxoj.com) - 1-click analytical dashboard for OSINT researchers, Bellingcat hackathon project
+- [OSINT namecheckers list](https://github.com/soxoj/osint-namecheckers-list) - a curated list of all the tools for checking accounts existence by username
+- [OSINT CLI tool skeleton](https://github.com/soxoj/osint-cli-tool-skeleton) - a template of a Python project for new OSINT command-line tools
+- [Username generation guide](https://github.com/soxoj/username-generation-guide) - a definitive guide to generating usernames for OSINT purposes
+- [Counter-OSINT & privacy guide](https://github.com/soxoj/counter-osint-guide-en) [[RU]](https://github.com/soxoj/counter-osint-guide-ru) [[BR]](https://github.com/alexandresantosal91/counter-osint-guide-pt-br) -  guide about your personal information protection
