@@ -17,18 +17,33 @@ module ExternalPosts
             fetch_from_rss(site, src)
           elsif src['posts']
             fetch_from_urls(site, src)
+          elsif src['file']
+            fetch_from_file(site, src)
           end
         end
       end
     end
 
-    def fetch_from_rss(site, src)
-      if site == "Substack"
-        xml = File.read('./substack.rss')
-      else
-        xml = HTTParty.get(src['rss_url'], headers: { 'User-Agent' => 'SoxojPreviewBot' }).body
-        return if xml.nil?
+    def fetch_from_file(site, src)
+      begin
+        xml = File.read("./#{src}")
+        raise 'Empty file content' if xml.strip.empty?
+
+        feed = Feedjira.parse(xml)
+
+        if feed.nil? || feed.entries.nil?
+          raise 'Feed parsing failed'
+        end
+
+        process_entries(site, src, feed.entries)
+      rescue StandardError => e
+        puts "Error processing file #{src}: #{e.message}"
       end
+    end
+
+    def fetch_from_rss(site, src)
+      xml = HTTParty.get(src['rss_url'], headers: { 'User-Agent' => 'SoxojPreviewBot' }).body
+      return if xml.nil?
 
       feed = Feedjira.parse(xml)
       process_entries(site, src, feed.entries)

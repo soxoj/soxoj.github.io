@@ -173,7 +173,8 @@ external_sources:
   - name: medium.com
     rss_url: https://soxoj.medium.com/feed
   - name: Substack
-    rss_url: https://soxoj.substack.com/feed
+    file: substack.rss
+    # rss_url: https://soxoj.substack.com/feed
 
 # -----------------------------------------------------------------------------
 # Newsletter
