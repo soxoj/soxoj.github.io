@@ -26,7 +26,13 @@ module ExternalPosts
 
     def fetch_from_file(site, src)
       begin
-        xml = File.read("./#{src}")
+        src_name = src['file']
+        possible_paths = [File.join('./', src_name), File.join('/home/runner/work/soxoj.github.io/soxoj.github.io', src_name)]
+
+        file_path = possible_paths.find { |path| File.exist?(path) }
+        raise "File not found in any directory: #{possible_paths.join(', ')}" unless file_path
+
+        xml = File.read(file_path)
         raise 'Empty file content' if xml.strip.empty?
 
         feed = Feedjira.parse(xml)
