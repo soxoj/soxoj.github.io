@@ -2,7 +2,7 @@
 layout: about
 title: Soxoj
 permalink: /
-subtitle: 
+subtitle:
 
 profile:
   align: right
@@ -16,7 +16,7 @@ selected_papers: false # includes a list of papers marked as "selected={true}"
 social: true # includes social icons at the bottom of the page
 ---
 
-I am an **[OSINT](https://www.sans.org/blog/what-is-open-source-intelligence/) specialist** with a background in cybersecurity and software development. 🔐 
+I am an **[OSINT](https://www.sans.org/blog/what-is-open-source-intelligence/) specialist** with a background in cybersecurity and software development. 🔐
 
 ⚒️ I started getting into open-source intelligence in 2015 by playing CTFs and ARGs and making [information-gathering and processing tools](https://github.com/stars/soxoj/lists/my-osint-tools).
 
@@ -39,4 +39,4 @@ I am an **[OSINT](https://www.sans.org/blog/what-is-open-source-intelligence/) s
 - [OSINT namecheckers list](https://github.com/soxoj/osint-namecheckers-list) - a curated list of all the tools for checking accounts existence by username
 - [OSINT CLI tool skeleton](https://github.com/soxoj/osint-cli-tool-skeleton) - a template of a Python project for new OSINT command-line tools
 - [Username generation guide](https://github.com/soxoj/username-generation-guide) - a definitive guide to generating usernames for OSINT purposes
-- [Counter-OSINT & privacy guide](https://github.com/soxoj/counter-osint-guide-en) [[RU]](https://github.com/soxoj/counter-osint-guide-ru) [[BR]](https://github.com/alexandresantosal91/counter-osint-guide-pt-br) -  guide about your personal information protection
+- [Counter-OSINT & privacy guide](https://github.com/soxoj/counter-osint-guide-en) [[RU]](https://github.com/soxoj/counter-osint-guide-ru) [[BR]](https://github.com/alexandresantosal91/counter-osint-guide-pt-br) - guide about your personal information protection
