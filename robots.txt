@@ -1,4 +1,4 @@
 User-agent: *
 Disallow:
 
-Sitemap: https://soxoj.github.io/sitemap.xml
+Sitemap: https://soxoj.com/sitemap.xml
