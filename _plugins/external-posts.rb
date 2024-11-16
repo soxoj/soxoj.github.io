@@ -23,11 +23,11 @@ module ExternalPosts
     end
 
     def fetch_from_rss(site, src)
-      xml = HTTParty.get(src['rss_url'], headers: { 'User-Agent' => 'SoxojPreviewBot' })
-      return if xml.nil?
-
-      if xml.include?('<!DOCTYPE html>')
+      if site == "Substack"
         xml = File.read('./substack.rss')
+      else
+        xml = HTTParty.get(src['rss_url'], headers: { 'User-Agent' => 'SoxojPreviewBot' }).body
+        return if xml.nil?
       end
 
       feed = Feedjira.parse(xml)
