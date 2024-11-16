@@ -2,7 +2,7 @@
 # Site settings
 # -----------------------------------------------------------------------------
 
-title: Dmitrii Danilov aka Soxoj # the website title (if blank, full name will be used instead)
+title: Soxoj's homepage # the website title (if blank, full name will be used instead)
 first_name: Dmitrii
 middle_name:
 last_name: Danilov
@@ -150,12 +150,12 @@ related_blog_posts:
 # Giscus comments (RECOMMENDED)
 # Follow instructions on https://giscus.app/ to setup for your repo to fill out the information below.
 giscus:
-  repo: # <your-github-user-name>/<your-github-repo-name>
-  repo_id: # leave empty or specify your repo_id (see https://giscus.app/)
-  category: Comments # name of the category under which discussions will be created
-  category_id: # leave empty or specify your category_id (see https://giscus.app/)
+  repo: soxoj/soxoj.github.io
+  repo_id: R_kgDONP-ssg
+  category: Q&A # name of the category under which discussions will be created
+  category_id: DIC_kwDONP-sss4CkVJo
   mapping: title # identify discussions by post title
-  strict: 1 # use strict identification mode
+  strict: 0 # use strict identification mode
   reactions_enabled: 1 # enable (1) or disable (0) emoji reactions
   input_position: bottom # whether to display input form below (bottom) or above (top) the comments
   theme: preferred_color_scheme # name of the color scheme (preferred works well with al-folio light/dark mode)
