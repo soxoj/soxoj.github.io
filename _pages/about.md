@@ -28,10 +28,10 @@ You can find my articles, guides, and just thoughts on [Substack](https://soxoj.
 
 #### Some my projects 🚧
 
-- [SOWEL](https://sowel.soxoj.com/) - a knowledge base on social media intelligence built on the principles of weaknesses analysis
+- [SOWEL](https://sowel.soxoj.com) - a knowledge base on social media intelligence built on the principles of weaknesses analysis
 - [Maigret](https://github.com/soxoj/maigret) - a username checker collecting a dossier on a person by username from 3000+ sites (9K stars on GitHub)
 - [Adana](https://adana.soxoj.com) - a 1-click analytical dashboard for OSINT researchers, Bellingcat hackathon project
 - [OSINT namecheckers list](https://github.com/soxoj/osint-namecheckers-list) - a curated list of all the tools for checking accounts existence by username
 - [OSINT CLI tool skeleton](https://github.com/soxoj/osint-cli-tool-skeleton) - a template of a Python project for new OSINT command-line tools
 - [Username generation guide](https://github.com/soxoj/username-generation-guide) - a definitive guide to generating usernames for OSINT purposes
-- [Counter-OSINT & privacy guide](https://github.com/soxoj/counter-osint-guide-en) [[RU]](https://github.com/soxoj/counter-osint-guide-ru) [[BR]](https://github.com/alexandresantosal91/counter-osint-guide-pt-br) - guide about your personal information protection
+- [Counter-OSINT & privacy guide](https://github.com/soxoj/counter-osint-guide-en) [[RU]](https://github.com/soxoj/counter-osint-guide-ru) - guide about your personal information protection
