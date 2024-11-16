@@ -171,7 +171,7 @@ disqus_shortname: al-folio # put your disqus shortname
 # you can display them in your blog by adding a link to the RSS feed.
 external_sources:
   - name: medium.com
-    rss_url: https://medium.com/@soxoj
+    rss_url: https://soxoj.medium.com/feed
   - name: Substack
     rss_url: https://soxoj.substack.com/feed
 
