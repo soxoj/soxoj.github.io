@@ -4,7 +4,7 @@
 
 title: Dmitrii Danilov aka Soxoj # the website title (if blank, full name will be used instead)
 first_name: Dmitrii
-middle_name: 
+middle_name:
 last_name: Danilov
 email: soxoj@protonmail.com
 description: > # the ">" symbol means to ignore newlines until "footer_text:"
@@ -172,8 +172,8 @@ disqus_shortname: al-folio # put your disqus shortname
 external_sources:
   - name: medium.com
     rss_url: https://soxoj.medium.com/feed
- # - name: Substack
-   # rss_url: https://soxoj.substack.com/feed
+  # - name: Substack
+  # rss_url: https://soxoj.substack.com/feed
 
 # -----------------------------------------------------------------------------
 # Newsletter
