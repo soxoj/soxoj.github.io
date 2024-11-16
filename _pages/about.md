@@ -1,6 +1,6 @@
 ---
 layout: about
-title: Soxoj
+title: me
 permalink: /
 subtitle:
 

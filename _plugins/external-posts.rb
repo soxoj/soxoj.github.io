@@ -87,6 +87,10 @@ module ExternalPosts
 
     def fetch_content_from_url(url)
       html = HTTParty.get(url, headers: { 'User-Agent' => 'SoxojPreviewBot' }).body
+      if html.include?('<!DOCTYPE html>')
+        html = File.read('./substack.rss')
+      end
+
       parsed_html = Nokogiri::HTML(html)
 
       title = parsed_html.at('head title')&.text.strip || ''

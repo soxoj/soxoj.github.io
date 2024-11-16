@@ -135,7 +135,7 @@ bing_site_verification: # out your bing-site-verification ID (Bing Webmaster)
 # -----------------------------------------------------------------------------
 
 blog_name: Soxoj's blog # blog_name will be displayed in your blog page
-blog_description: short notes from Soxoj
+blog_description: Posts and articles from Medium and Substack. For the latest updates, check out my Telegram channel @soxoj_insides and my LinkedIn.
 permalink: /blog/:year/:title/
 lsi: false # produce an index for related posts
 
@@ -172,8 +172,8 @@ disqus_shortname: al-folio # put your disqus shortname
 external_sources:
   - name: medium.com
     rss_url: https://soxoj.medium.com/feed
-  # - name: Substack
-  # rss_url: https://soxoj.substack.com/feed
+  - name: Substack
+    rss_url: https://soxoj.substack.com/feed
 
 # -----------------------------------------------------------------------------
 # Newsletter
@@ -304,8 +304,8 @@ jekyll-archives:
     tag: "/blog/tag/:name/"
     category: "/blog/category/:name/"
 
-display_tags: ["formatting", "images", "links", "math", "code", "blockquotes"] # these tags will be displayed on the front page of your blog
-display_categories: ["external-services"] # these categories will be displayed on the front page of your blog
+display_tags: [] # these tags will be displayed on the front page of your blog
+display_categories: [] # these categories will be displayed on the front page of your blog
 
 # -----------------------------------------------------------------------------
 # Jekyll Scholar
