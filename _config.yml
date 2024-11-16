@@ -172,8 +172,8 @@ disqus_shortname: al-folio # put your disqus shortname
 external_sources:
   - name: medium.com
     rss_url: https://soxoj.medium.com/feed
-  - name: Substack
-    rss_url: https://soxoj.substack.com/feed
+#  - name: Substack
+#    rss_url: https://soxoj.substack.com/feed
 
 # -----------------------------------------------------------------------------
 # Newsletter
