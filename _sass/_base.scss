@@ -312,7 +312,7 @@ ul.task-list input[type="checkbox"] {
 
     a {
       i::before {
-        color: var(--global-text-color);
+        color: var(--global-text-color-light);
         transition-property: all 0.2s ease-in-out;
       }
 

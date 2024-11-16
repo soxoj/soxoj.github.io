@@ -2,9 +2,9 @@
 # Site settings
 # -----------------------------------------------------------------------------
 
-title: Soxoj # the website title (if blank, full name will be used instead)
-first_name: [Soxoj]
-middle_name: Dmitrii
+title: Dmitrii Danilov aka Soxoj # the website title (if blank, full name will be used instead)
+first_name: Dmitrii
+middle_name: 
 last_name: Danilov
 email: soxoj@protonmail.com
 description: > # the ">" symbol means to ignore newlines until "footer_text:"
@@ -172,8 +172,8 @@ disqus_shortname: al-folio # put your disqus shortname
 external_sources:
   - name: medium.com
     rss_url: https://soxoj.medium.com/feed
-#  - name: Substack
-#    rss_url: https://soxoj.substack.com/feed
+ # - name: Substack
+   # rss_url: https://soxoj.substack.com/feed
 
 # -----------------------------------------------------------------------------
 # Newsletter
@@ -199,12 +199,12 @@ collections:
     permalink: /:collection/:title/
 
 announcements:
-  enabled: true
+  enabled: false
   scrollable: true # adds a vertical scroll bar if there are more than 3 news items
   limit: 5 # leave blank to include all the news in the `_news` folder
 
 latest_posts:
-  enabled: true
+  enabled: false
   scrollable: true # adds a vertical scroll bar if there are more than 3 new posts items
   limit: 3 # leave blank to include all the blog posts
 
