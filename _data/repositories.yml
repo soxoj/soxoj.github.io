@@ -5,7 +5,20 @@ repo_description_lines_max: 2
 
 github_repos:
   - soxoj/maigret
-  - soxoj/counter-osint-guide-ru
   - soxoj/counter-osint-guide-en
+  - soxoj/osint-namecheckers-list
+  - soxoj/marple
   - sharsil/mailcat
   - sharsil/favicorn
+  - OSINT-mindset/ShowMePlace
+  - OSINT-mindset/YaSeekerUltra
+  - OSINT-mindset/lingolens
+  - soxoj/counter-osint-guide-ru
+  - soxoj/telegram-bot-dumper
+  - soxoj/username-generation-guide
+  - soxoj/gitcolombo
+  - HowToFind-bot/YaSeeker
+  - HowToFind-bot/osint-tools
+  - soxoj/osint-cli-tool-skeleton
+  - soxoj/files-search-guide
+  - soxoj/bellingcat-hackathon-watchcats
