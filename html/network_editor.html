@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Personal Network Diagram Editor</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 20px;
+      background-color: #f4f4f9;
+      color: #333;
+    }
+    .main-button {
+      font-family: 'Roboto', sans-serif;
+      padding: 10px 15px;
+      margin: 5px;
+      border: none;
+      border-radius: 5px;
+      background-color: #e57373; /* Muted red color */
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .main-button:hover {
+      background-color: #ef5350;
+    }
+    .main-button:active {
+      background-color: #d32f2f;
+    }
+    .settings-button {
+      font-family: 'Roboto', sans-serif;
+      padding: 10px 15px;
+      margin: 5px;
+      border: none;
+      border-radius: 5px;
+      background-color: #007BFF; /* Blue color */
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .settings-button:hover {
+      background-color: #0056b3;
+    }
+    .settings-button:active {
+      background-color: #003f7f;
+    }
+    .spoiler {
+      margin-top: 10px;
+      margin-bottom: 10px; /* Added spacing */
+      cursor: pointer;
+      color: #007BFF;
+      text-decoration: underline;
+    }
+    .settings {
+      display: none;
+      margin-top: 10px;
+    }
+    input[type="text"], select {
+      font-family: 'Roboto', sans-serif;
+      padding: 10px 15px;
+      margin: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      height: 42px; /* Match button height */
+      box-sizing: border-box;
+    }
+    input[type="text"]:focus, select:focus {
+      outline: none;
+      border-color: #007BFF;
+    }
+    h1 {
+      color: #007BFF;
+    }
+    span {
+      font-size: 0.9em;
+      color: #666;
+    }
+    #diagram {
+      border: 1px solid #ccc;
+      background-color: #f9f9f9;
+    }
+    .contact {
+      stroke: white;
+      stroke-width: 2px;
+      cursor: pointer;
+    }
+    .connection {
+      fill: none;
+      stroke: #999;
+      stroke-width: 2px;
+    }
+    .sector-line {
+      stroke: #aaa;
+      stroke-width: 1px;
+    }
+    .center {
+      fill: orange;
+      stroke: black;
+      stroke-width: 2px;
+    }
+    /* Texts will receive size through inline style */
+  </style>
+</head>
+<body>
+  <h1>Personal Network Diagram Editor</h1>
+  <p style="font-size: 12px; color: gray;">
+    This is a Personal Network Diagram Editor where you can display connections with contacts, their proximity to you, and define sector groups of people.
+  </p>
+  <div>
+    <button class="main-button" id="harryPotterBtn">Harry Potter</button>
+    <button class="main-button" id="gameOfThronesBtn">Game of Thrones</button>
+  </div>
+  <div class="spoiler" onclick="toggleSettings()">Click here to show/hide settings</div>
+  <div class="settings">
+    <div style="margin-top:10px;">
+      <button class="settings-button" id="exportSVGBtn">Export SVG</button>
+      <button class="settings-button" id="exportFileBtn">Export File</button>
+      <button class="settings-button" id="importFileBtn">Import File</button>
+      <button class="settings-button" id="clearBtn">Clear</button>
+      <input type="file" id="importFileInput" style="display:none" accept="application/json" />
+    </div>
+    <div style="margin-top:10px;">
+      <label for="contactName">Contact Name:</label>
+      <input type="text" id="contactName" placeholder="Enter name" />
+      <button class="settings-button" id="addContactBtn">Create</button>
+      <span>(Click the button, then click on the diagram to place the contact)</span>
+    </div>
+    <div style="margin-top:10px;">
+      <label for="lineStyle">Add Connection:</label>
+      <select id="lineStyle">
+        <option value="bold">Bold</option>
+        <option value="dashed">Dashed</option>
+        <option value="arrow">Arrow</option>
+      </select>
+      <label for="lineQuality">Positive/Negative:</label>
+      <select id="lineQuality">
+        <option value="positive">+</option>
+        <option value="negative">–</option>
+      </select>
+      <button class="settings-button" id="connectBtn">Connect Contacts</button>
+      <span>(Select two contacts by Shift+clicking on them)</span>
+    </div>
+    <div style="margin-top:10px;">
+      <label for="sectorSelect">Sectors:</label>
+      <select id="sectorSelect">
+        <!-- Options will be populated dynamically -->
+      </select>
+      <button class="settings-button" id="addSectorBtn">Add Sector</button>
+      <button class="settings-button" id="removeSectorBtn">Remove Sector</button>
+      <span>Double click to edit sector</span>
+    </div>
+    <div style="margin-top:10px; display: flex; align-items: center;">
+      <button class="settings-button" id="increaseFontSizeBtn">A+</button>
+      <button class="settings-button" id="decreaseFontSizeBtn">A-</button>
+      <span style="margin-right: 20px;">Font Size</span>
+      <button class="settings-button" id="increaseArrowThicknessBtn">↑</button>
+      <button class="settings-button" id="decreaseArrowThicknessBtn">↓</button>
+      <span>Arrow Thickness</span>
+      <button class="settings-button" onclick="window.open('https://t.me/soxoj', '_blank')">Send Feedback to Author</button>
+    </div>
+  </div>
+  <svg id="diagram" width="800" height="800"></svg>
+  <script>
+    // Global variables
+    const width = 800, height = 800;
+    let center = { x: width / 2, y: height / 2 };
+    let currentFontSize = 12;
+    
+    // Radii of concentric circles
+    let radii = {
+      support: 100,
+      productivity: 200,
+      development: 300
+    };
+    let outerRadius = radii.development;
+    
+    // Color palette (for contacts and sectors)
+    const colorPalette = [
+      { name: "blue", contact: "steelblue", sector: "rgba(70,130,180,0.3)" },
+      { name: "red", contact: "darkred", sector: "rgba(139,0,0,0.3)" },
+      { name: "yellow", contact: "goldenrod", sector: "rgba(218,165,32,0.3)" },
+      { name: "green", contact: "seagreen", sector: "rgba(46,139,87,0.3)" },
+      { name: "black", contact: "black", sector: "rgba(0,0,0,0.3)" }
+    ];
+    
+    // Create SVG with zoom and pan support
+    const svg = d3.select("#diagram")
+      .attr("width", width)
+      .attr("height", height)
+      .call(d3.zoom()
+        .on("zoom", (event) => {
+          g.attr("transform", event.transform);
+        })
+        .filter((event) => {
+          // Disable zoom on double-click
+          return !event.dblclick;
+        })
+      );
+      
+    // Disable zoom on double-click
+    svg.on("dblclick.zoom", null);
+      
+    // Groups for different levels (sectors - the lowest level)
+    const g = svg.append("g");
+    const sectorsGroup = g.insert("g", ":first-child").attr("id", "sectorsGroup");
+    const staticGroup = g.append("g").attr("id", "staticGroup");
+    const dynamicGroup = g.append("g").attr("id", "dynamicGroup");
+    
+    // Define arrow marker for "arrow" style
+    svg.append("defs").append("marker")
+      .attr("id", "arrowhead")
+      .attr("viewBox", "0 -5 10 10")
+      .attr("refX", 10)
+      .attr("refY", 0)
+      .attr("markerWidth", 6)
+      .attr("markerHeight", 6)
+      .attr("orient", "auto")
+      .append("path")
+      .attr("d", "M0,-5L10,0L0,5")
+      .attr("fill", "#999");
+    
+    // Sector data (default 1 sector)
+    let sectorsData = [
+      { id: 1, name: "Family", startAngle: -Math.PI / 8, endAngle: Math.PI / 8, color: "rgba(218,165,32,0.3)" } // Yellow
+    ];
+    
+    // Arrays for storing contacts and connections
+    let contacts = [];
+    let connections = [];
+    let contactIdCounter = 1;
+    let selectedContacts = [];
+    let addContactMode = false;
+    let arrowThickness = 2; // Default arrow thickness
+    
+    // Function to draw sectors (colored background)
+    function drawSectors() {
+      const arcGenerator = d3.arc()
+        .innerRadius(0)
+        .outerRadius(outerRadius)
+        .startAngle(d => {
+          // If the angle between start and end is greater than 180 degrees, swap them
+          if (d.endAngle - d.startAngle > Math.PI) {
+            [d.startAngle, d.endAngle] = [d.endAngle, d.startAngle];
+          }
+          return d.startAngle + Math.PI / 2; // add 90 degrees
+        })
+        .endAngle(d => d.endAngle + Math.PI / 2); // add 90 degrees
+      const arcs = sectorsGroup.selectAll("path")
+        .data(sectorsData, d => d.id);
+    
+      arcs.join("path")
+        .attr("d", arcGenerator)
+        .attr("transform", `translate(${center.x}, ${center.y})`)
+        .attr("fill", d => d.color ? d.color : "none")
+        .attr("stroke", "none");
+    }
+    // Function to draw static elements (circles, center, sector lines, sector labels)
+    function drawStaticElements() {
+      staticGroup.selectAll("*").remove();
+      // Draw concentric circles
+      [radii.support, radii.productivity, radii.development].forEach(r => {
+        staticGroup.append("circle")
+          .attr("cx", center.x)
+          .attr("cy", center.y)
+          .attr("r", r)
+          .attr("fill", "none")
+          .attr("stroke", "#aaa")
+          .attr("stroke-dasharray", "4 2");
+      });
+      // Center (user)
+      staticGroup.append("circle")
+        .attr("cx", center.x)
+        .attr("cy", center.y)
+        .attr("r", 8)
+        .attr("class", "center");
+
+      // Draw sector lines and draggable points
+      sectorsData.forEach((sector) => {
+        const startX = center.x + outerRadius * Math.cos(sector.startAngle);
+        const startY = center.y + outerRadius * Math.sin(sector.startAngle);
+        const endX = center.x + outerRadius * Math.cos(sector.endAngle);
+        const endY = center.y + outerRadius * Math.sin(sector.endAngle);
+
+        // Draw dashed lines from center to start and end points
+        staticGroup.append("line")
+          .attr("x1", center.x)
+          .attr("y1", center.y)
+          .attr("x2", startX)
+          .attr("y2", startY)
+          .attr("class", "sector-line")
+          .attr("stroke-dasharray", "4 2");
+
+        staticGroup.append("line")
+          .attr("x1", center.x)
+          .attr("y1", center.y)
+          .attr("x2", endX)
+          .attr("y2", endY)
+          .attr("class", "sector-line")
+          .attr("stroke-dasharray", "4 2");
+
+        // Draggable start point
+        staticGroup.append("circle")
+          .attr("cx", startX)
+          .attr("cy", startY)
+          .attr("r", 5)
+          .attr("fill", "red")
+          .attr("class", "drag-point")
+          .call(d3.drag().on("drag", function(event) {
+            const angle = Math.atan2(event.y - center.y, event.x - center.x);
+            sector.startAngle = angle;
+            drawStaticElements();
+            drawSectors();
+          }));
+
+        // Draggable end point
+        staticGroup.append("circle")
+          .attr("cx", endX)
+          .attr("cy", endY)
+          .attr("r", 5)
+          .attr("fill", "red")
+          .attr("class", "drag-point")
+          .call(d3.drag().on("drag", function(event) {
+            const angle = Math.atan2(event.y - center.y, event.x - center.x);
+            sector.endAngle = angle;
+            drawStaticElements();
+            drawSectors();
+          }));
+
+        // Draw sector labels
+        const sectorLabels = staticGroup.selectAll(".sector-label")
+          .data(sectorsData)
+          .enter()
+          .append("text")
+          .attr("class", "sector-label")
+          .attr("text-anchor", "middle")
+          .style("font-size", currentFontSize + "px")
+          .style("cursor", "pointer")
+          .attr("x", d => {
+            const midAngle = (d.startAngle + d.endAngle) / 2;
+            return center.x + (outerRadius + 30) * Math.cos(midAngle);
+          })
+          .attr("y", d => {
+            const midAngle = (d.startAngle + d.endAngle) / 2;
+            return center.y + (outerRadius + 30) * Math.sin(midAngle);
+          })
+          .text(d => d.name)
+          .on("dblclick", function(event, d) {
+            const newName = prompt("Enter new name for the sector:", d.name);
+            if (newName) {
+              d.name = newName;
+              d3.select(this).text(d.name);
+            }
+          })
+          .on("click", function(event, d) {
+            // Cycle through sector colors
+            let current = d.color;
+            let idx = colorPalette.findIndex(c => c.sector === current);
+            idx = (idx + 1) % colorPalette.length;
+            d.color = colorPalette[idx].sector;
+            d3.select(this).text(d.name);
+            drawSectors();
+          });
+      });
+      drawSectors();
+    }
+    
+    function getColorName(color) {
+      const colorEntry = colorPalette.find(c => c.sector === color);
+      return colorEntry ? colorEntry.name : "unknown";
+    }
+    
+    // Function to draw contacts
+    function drawContacts() {
+      dynamicGroup.selectAll(".contactGroup").remove();
+    
+      const contactSel = dynamicGroup.selectAll(".contactGroup")
+        .data(contacts, d => d.id);
+      
+      const contactEnter = contactSel.enter()
+        .append("g")
+        .attr("class", "contactGroup")
+        .call(d3.drag().on("drag", dragged));
+    
+      contactEnter.append("circle")
+        .attr("class", "contact")
+        .attr("r", 6)
+        .attr("fill", d => d.color ? d.color : "steelblue")
+        .on("click", function(event, d) {
+          event.stopPropagation();
+          // If Shift is held, select contact for connection
+          if (event.shiftKey) {
+            if (selectedContacts.find(c => c.id === d.id)) {
+              selectedContacts = selectedContacts.filter(c => c.id !== d.id);
+              d3.select(this).attr("stroke", null);
+            } else {
+              selectedContacts.push(d);
+              d3.select(this).attr("stroke", "red");
+            }
+          } else {
+            // Single click changes contact color (cyclically)
+            let current = d.color ? d.color : "steelblue";
+            let idx = colorPalette.findIndex(c => c.contact === current);
+            idx = (idx + 1) % colorPalette.length;
+            d.color = colorPalette[idx].contact;
+            d3.select(this).attr("fill", d.color);
+          }
+        });
+    
+      contactEnter.append("text")
+        .attr("dx", 10)
+        .attr("dy", 4)
+        .style("font-size", currentFontSize + "px")
+        .text(d => d.name);
+    
+      contactSel.merge(contactEnter)
+        .attr("transform", d => `translate(${d.x},${d.y})`);
+    
+      contactSel.exit().remove();
+      drawConnections();
+    }
+    
+    // Function to draw connections
+    function drawConnections() {
+      dynamicGroup.selectAll(".connection").remove();
+
+      dynamicGroup.selectAll(".connection")
+        .data(connections)
+        .enter()
+        .append("line")
+        .attr("class", "connection")
+        .attr("x1", d => d.source.x)
+        .attr("y1", d => d.source.y)
+        .attr("x2", d => d.target.x)
+        .attr("y2", d => d.target.y)
+        .attr("stroke", "#666") // Gray color
+        .attr("stroke-width", 1); // Sufficient thickness
+    }
+    
+    // Initial drawing of static and dynamic elements
+    drawStaticElements();
+    drawContacts();
+    
+    // Handler for adding a contact: enables add mode
+    document.getElementById("addContactBtn").addEventListener("click", () => {
+      const name = document.getElementById("contactName").value.trim();
+      if (!name) {
+        alert("Please enter a contact name.");
+        return;
+      }
+      addContactMode = true;
+      alert("Click on the diagram to place the contact: " + name);
+    });
+    
+    // Add contact by clicking on SVG (if add mode is enabled)
+    svg.on("click", function(event) {
+      if (!addContactMode) return;
+      const coords = d3.pointer(event);
+      const dx = coords[0] - center.x, dy = coords[1] - center.y;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+      if (distance > outerRadius) {
+        alert("Contact must be within the outer boundary.");
+        return;
+      }
+      const name = document.getElementById("contactName").value.trim();
+      const newContact = { id: contactIdCounter++, name: name, x: coords[0], y: coords[1] };
+      contacts.push(newContact);
+      drawContacts();
+      addContactMode = false;
+      document.getElementById("contactName").value = "";
+    });
+    
+    // Drag-and-drop for moving contacts with outer boundary constraint
+    function dragged(event, d) {
+      d.x = event.x;
+      d.y = event.y;
+      const dx = d.x - center.x, dy = d.y - center.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist > outerRadius) {
+        d.x = center.x + (dx / dist) * outerRadius;
+        d.y = center.y + (dy / dist) * outerRadius;
+      }
+      d3.select(this).attr("transform", `translate(${d.x},${d.y})`);
+      drawConnections();
+    }
+    
+    // Handler for creating a connection between selected contacts
+    document.getElementById("connectBtn").addEventListener("click", () => {
+      if (selectedContacts.length !== 2) {
+        alert("Please select exactly two contacts (Shift+clicking on them).");
+        return;
+      }
+      const lineStyle = document.getElementById("lineStyle").value;
+      const quality = document.getElementById("lineQuality").value;
+      connections.push({
+        source: selectedContacts[0],
+        target: selectedContacts[1],
+        style: lineStyle,
+        quality: quality
+      });
+      selectedContacts = [];
+      dynamicGroup.selectAll(".contactGroup").select("circle").attr("stroke", null);
+      drawConnections();
+    });
+    
+    // Function to export SVG with file name prompt
+    document.getElementById("exportSVGBtn").addEventListener("click", () => {
+      let fileName = prompt("Enter SVG file name:", "network_diagram.svg");
+      if (!fileName) fileName = "network_diagram.svg";
+      const serializer = new XMLSerializer();
+      const source = serializer.serializeToString(svg.node());
+      const blob = new Blob([source], { type: "image/svg+xml;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    });
+    
+    // Function to export diagram to JSON with file name prompt
+    document.getElementById("exportFileBtn").addEventListener("click", () => {
+      let fileName = prompt("Enter JSON file name:", "network_diagram.json");
+      if (!fileName) fileName = "network_diagram.json";
+      const diagramData = {
+        version: "1.0",
+        meta: { description: "Personal Network Diagram data" },
+        config: {
+          center: center,
+          radii: radii
+        },
+        sectors: sectorsData,
+        contacts: contacts,
+        connections: connections.map(conn => ({
+          source: conn.source.id,
+          target: conn.target.id,
+          style: conn.style,
+          quality: conn.quality
+        }))
+      };
+      const jsonStr = JSON.stringify(diagramData, null, 2);
+      const blob = new Blob([jsonStr], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    });
+    
+    // Import diagram from JSON file
+    document.getElementById("importFileBtn").addEventListener("click", () => {
+      document.getElementById("importFileInput").click();
+    });
+    
+    document.getElementById("importFileInput").addEventListener("change", (event) => {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const data = JSON.parse(e.target.result);
+          // Update configuration if it exists
+          if (data.config) {
+            if (data.config.center) {
+              center = data.config.center;
+            }
+            if (data.config.radii) {
+              radii = data.config.radii;
+              outerRadius = radii.development;
+            }
+          }
+          if (data.sectors) {
+            sectorsData = data.sectors;
+          }
+          if (data.contacts) {
+            contacts = data.contacts;
+            // Assign default color if not specified
+            contacts.forEach(c => {
+              if (!c.color) c.color = "steelblue";
+            });
+            contactIdCounter = contacts.reduce((max, c) => Math.max(max, c.id), 0) + 1;
+          }
+          if (data.connections) {
+            connections = data.connections.map(conn => {
+              const source = contacts.find(c => c.id === conn.source);
+              const target = contacts.find(c => c.id === conn.target);
+              return { source, target, style: conn.style, quality: conn.quality };
+            });
+          }
+          // Redraw the entire diagram
+          sectorsGroup.selectAll("*").remove();
+          staticGroup.selectAll("*").remove();
+          dynamicGroup.selectAll("*").remove();
+          drawStaticElements();
+          drawContacts();
+          updateSectorDropdown(); // Ensure dropdown is updated
+        } catch (err) {
+          alert("Error importing file: " + err);
+        }
+      };
+      reader.readAsText(file);
+    });
+    
+    // Handlers for changing font size
+    document.getElementById("increaseFontSizeBtn").addEventListener("click", () => {
+      currentFontSize += 2;
+      updateFontSize();
+    });
+    
+    document.getElementById("decreaseFontSizeBtn").addEventListener("click", () => {
+      currentFontSize = Math.max(6, currentFontSize - 2);
+      updateFontSize();
+    });
+    
+    function updateFontSize() {
+      // Update all text elements in the static group (e.g., sector labels)
+      staticGroup.selectAll("text").style("font-size", currentFontSize + "px");
+      // Update contact text and connection quality labels
+      dynamicGroup.selectAll("text").style("font-size", currentFontSize + "px");
+    }
+
+    // Function to update the sector dropdown
+    function updateSectorDropdown() {
+      const sectorSelect = document.getElementById("sectorSelect");
+      sectorSelect.innerHTML = ""; // Clear existing options
+      sectorsData.forEach(sector => {
+        const option = document.createElement("option");
+        option.value = sector.id;
+        option.text = sector.name;
+        sectorSelect.add(option);
+      });
+    }
+
+    // Add sector functionality
+    function addSector() {
+      const gapThreshold = Math.PI / 8; // Define a gap threshold for spacing
+      let newStartAngle = null;
+      let newEndAngle = null;
+
+      // If no sectors exist, add the first sector
+      if (sectorsData.length === 0) {
+        newStartAngle = 0;
+        newEndAngle = Math.PI / 4; // Default size
+      } else {
+        // Sort sectors by start angle
+        sectorsData.sort((a, b) => a.startAngle - b.startAngle);
+
+        // Find a gap between sectors
+        for (let i = 0; i < sectorsData.length; i++) {
+          const current = sectorsData[i];
+          const next = sectorsData[(i + 1) % sectorsData.length];
+          const gap = (next.startAngle - current.endAngle + 2 * Math.PI) % (2 * Math.PI);
+
+          if (gap > gapThreshold) {
+            newStartAngle = current.endAngle + gapThreshold / 2;
+            newEndAngle = next.startAngle - gapThreshold / 2;
+            break;
+          }
+        }
+
+        // If no gap found, add at the end
+        if (newStartAngle === null || newEndAngle === null) {
+          newStartAngle = sectorsData[sectorsData.length - 1].endAngle + gapThreshold;
+          newEndAngle = newStartAngle + Math.PI / 4; // Default size
+        }
+      }
+
+      // Assign a random color from the palette
+      const randomColor = colorPalette[Math.floor(Math.random() * colorPalette.length)].sector;
+
+      // Add the new sector
+      sectorsData.push({
+        id: sectorsData.length + 1,
+        name: `Sector ${sectorsData.length + 1}`,
+        startAngle: newStartAngle,
+        endAngle: newEndAngle,
+        color: randomColor
+      });
+
+      drawStaticElements();
+      updateSectorDropdown(); // Update dropdown after adding a sector
+    }
+
+    // Event listener for adding a sector
+    document.getElementById("addSectorBtn").addEventListener("click", addSector);
+
+    // Remove sector functionality
+    document.getElementById("removeSectorBtn").addEventListener("click", () => {
+      const sectorSelect = document.getElementById("sectorSelect");
+      const selectedSectorId = parseInt(sectorSelect.value);
+      sectorsData = sectorsData.filter(sector => sector.id !== selectedSectorId);
+      updateSectorDropdown();
+      drawStaticElements();
+    });
+
+    // Initial population of the sector dropdown
+    updateSectorDropdown();
+    // Function to update arrow thickness
+    function updateArrowThickness() {
+      dynamicGroup.selectAll(".connection")
+        .attr("stroke-width", arrowThickness);
+      drawConnections(); // Call the function to update connections
+    }
+
+    // Event listeners for arrow thickness buttons
+    document.getElementById("increaseArrowThicknessBtn").addEventListener("click", () => {
+      arrowThickness += 1;
+      updateArrowThickness();
+    });
+
+    document.getElementById("decreaseArrowThicknessBtn").addEventListener("click", () => {
+      arrowThickness = Math.max(1, arrowThickness - 1); // Ensure thickness doesn't go below 1
+      updateArrowThickness();
+    });
+
+    // Function to toggle settings visibility
+    function toggleSettings() {
+      const settings = document.querySelector('.settings');
+      if (settings.style.display === 'none' || settings.style.display === '') {
+        settings.style.display = 'block';
+      } else {
+        settings.style.display = 'none';
+      }
+    }
+
+    // Empty diagram data for Harry Potter and Game of Thrones
+    const harryPotterData = {
+      version: "1.0",
+      meta: {
+        description: "Harry Potter Network Diagram"
+      },
+      config: {
+        center: { x: 400, y: 400 },
+        radii: {
+          support: 100,
+          productivity: 200,
+          development: 300
+        }
+      },
+      sectors: [
+        { id: 1, name: "Gryffindor", startAngle: 0, endAngle: 1.57, color: "rgba(255,0,0,0.3)" }, // Red
+        { id: 2, name: "Hufflepuff", startAngle: 1.57, endAngle: 3.14, color: "rgba(255,215,0,0.3)" }, // Yellow
+        { id: 3, name: "Ravenclaw", startAngle: 3.14, endAngle: 4.71, color: "rgba(0,0,255,0.3)" }, // Blue
+        { id: 4, name: "Slytherin", startAngle: 4.71, endAngle: 6.28, color: "rgba(0,128,0,0.3)" } // Green
+      ],
+      contacts: [
+        { id: 1, name: "Ron Weasley", x: 426.95, y: 459.06 },
+        { id: 2, name: "Hermione Granger", x: 474.34, y: 416.57 },
+        { id: 3, name: "Neville Longbottom", x: 476.45, y: 513.82 },
+        { id: 4, name: "Luna Lovegood", x: 571.33, y: 471.15 },
+        { id: 5, name: "Cedric Diggory", x: 447.62, y: 630.81 },
+        { id: 6, name: "Cho Chang", x: 346.95, y: 306.07 },
+        { id: 7, name: "Draco Malfoy", x: 464.98, y: 234.17 },
+        { id: 8, name: "Severus Snape", x: 515.40, y: 371.54 },
+        { id: 9, name: "Minerva McGonagall", x: 434.46, y: 549.40 },
+        { id: 10, name: "Filius Flitwick", x: 239.33, y: 318.07, color: "steelblue" }
+      ],
+      connections: [
+        { source: 1, target: 2, style: "bold", quality: "positive" },
+        { source: 1, target: 3, style: "dashed", quality: "positive" },
+        { source: 2, target: 4, style: "dashed", quality: "positive" },
+        { source: 5, target: 6, style: "arrow", quality: "positive" },
+        { source: 7, target: 8, style: "bold", quality: "positive" },
+        { source: 9, target: 10, style: "dashed", quality: "positive" }
+      ]
+    };
+
+    const gameOfThronesData = {
+      version: "1.0",
+      meta: {
+        description: "Personal Network Diagram data with Game of Thrones characters, centered on Jon Snow"
+      },
+      config: {
+        center: { x: 400, y: 400 },
+        radii: {
+          support: 100,
+          productivity: 200,
+          development: 300
+        }
+      },
+      sectors: [
+        { id: 1, name: "House Stark", startAngle: 0, endAngle: 1.57, color: "rgba(70,130,180,0.3)" }, // Blue
+        { id: 2, name: "House Lannister", startAngle: 1.57, endAngle: 3.14, color: "rgba(139,0,0,0.3)" }, // Red
+        { id: 3, name: "House Targaryen & Allies", startAngle: 3.14, endAngle: 4.71, color: "rgba(218,165,32,0.3)" }, // Yellow
+        { id: 4, name: "Other Houses", startAngle: 4.71, endAngle: 6.28, color: "rgba(46,139,87,0.3)" } // Green
+      ],
+      contacts: [
+        { id: 1, name: "Jon Snow", x: 400, y: 400 },
+        { id: 2, name: "Arya Stark", x: 543.21, y: 446.14 },
+        { id: 3, name: "Sansa Stark", x: 487.47, y: 527.47 },
+        { id: 4, name: "Bran Stark", x: 419.18, y: 574.18 },
+        { id: 5, name: "Tyrion Lannister", x: 344.40, y: 553.84 },
+        { id: 6, name: "Cersei Lannister", x: 239.26, y: 423.72 },
+        { id: 7, name: "Daenerys Targaryen", x: 258.15, y: 292.79 },
+        { id: 8, name: "Jorah Mormont", x: 345.33, y: 347.93 },
+        { id: 9, name: "Theon Greyjoy", x: 548.81, y: 374.83 },
+        { id: 10, name: "Samwell Tarly", x: 442.22, y: 274.03 }
+      ],
+      connections: [
+        { source: 1, target: 2, style: "bold", quality: "positive" },
+        { source: 1, target: 3, style: "dashed", quality: "positive" },
+        { source: 5, target: 6, style: "arrow", quality: "negative" },
+        { source: 7, target: 8, style: "bold", quality: "positive" },
+        { source: 4, target: 1, style: "dashed", quality: "positive" },
+        { source: 9, target: 10, style: "dashed", quality: "negative" }
+      ]
+    };
+
+    // Function to load diagram data
+    function loadDiagram(data) {
+      center = data.config.center;
+      radii = data.config.radii;
+      outerRadius = radii.development;
+      sectorsData = data.sectors;
+      contacts = data.contacts;
+      connections = data.connections.map(conn => {
+        const source = contacts.find(c => c.id === conn.source);
+        const target = contacts.find(c => c.id === conn.target);
+        return { source, target, style: conn.style, quality: conn.quality };
+      });
+      drawStaticElements();
+      drawContacts();
+    }
+
+    // Event listeners for buttons
+    document.getElementById("harryPotterBtn").addEventListener("click", () => {
+      loadDiagram(harryPotterData);
+    });
+
+    document.getElementById("gameOfThronesBtn").addEventListener("click", () => {
+      loadDiagram(gameOfThronesData);
+    });
+
+    // Initial drawing
+    drawStaticElements();
+    drawContacts();
+
+    document.getElementById("clearBtn").addEventListener("click", () => {
+      // Clear all data
+      contacts = [];
+      connections = [];
+      sectorsData = [];
+      contactIdCounter = 1;
+      selectedContacts = [];
+      
+      // Clear the SVG elements
+      sectorsGroup.selectAll("*").remove();
+      staticGroup.selectAll("*").remove();
+      dynamicGroup.selectAll("*").remove();
+      
+      // Redraw static elements
+      drawStaticElements();
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("harryPotterBtn").click();
+    });
+  </script>
+</body>
+</html>
