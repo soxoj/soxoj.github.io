@@ -5,6 +5,7 @@ permalink: /projects/
 description: A growing collection of your cool projects.
 nav: false
 nav_order: 3
+sitemap: false # пустая заготовка: не отдаём в поиск, пока не заполнена
 display_categories: [work, fun]
 horizontal: false
 ---

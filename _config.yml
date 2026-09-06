@@ -2,15 +2,16 @@
 # Site settings
 # -----------------------------------------------------------------------------
 
-title: Soxoj's homepage # the website title (if blank, full name will be used instead)
+title: "Soxoj — OSINT specialist and tool developer" # the website title (if blank, full name will be used instead)
 first_name: Dmitrii
 middle_name:
 last_name: Danilov
 email: soxoj@protonmail.com
 description: > # the ">" symbol means to ignore newlines until "footer_text:"
-  A homepage of Soxoj.
+  OSINT specialist, creator of Maigret and other open-source intelligence tools.
+  Guides, research and projects on finding and analysing public data.
 footer_text:
-keywords: jekyll, jekyll-theme, academic-website, portfolio-website # add your own keywords or leave empty
+keywords: OSINT, open-source intelligence, Maigret, username search, digital investigations, Soxoj # add your own keywords or leave empty
 lang: en # the language of your site (for example: en, fr, cn, ru, etc.)
 icon: 🕵️ # the emoji used as the favicon (alternatively, provide image name in /assets/img/)
 
@@ -62,7 +63,7 @@ max_width: 930px
 # see https://schema.org/docs/faq.html for more information
 serve_og_meta: true # Include Open Graph meta tags in the HTML head
 serve_schema_org: true # Include Schema.org in the HTML head
-og_image: # The site-wide (default for all links) Open Graph preview image
+og_image: https://soxoj.com/assets/img/prof_pic.jpg # The site-wide (default for all links) Open Graph preview image
 
 # -----------------------------------------------------------------------------
 # Social integration
@@ -240,7 +241,6 @@ exclude:
   - lighthouse_results/
   - package.json
   - package-lock.json
-  - _pages/about_einstein.md
   - purgecss.config.js
   - README.md
   - readme_preview/
