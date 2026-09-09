@@ -5,6 +5,7 @@ on:
     branches:
       - master
       - main
+      - dev
     paths:
       - "assets/**"
       - "**.bib"
@@ -88,13 +89,29 @@ jobs:
         run: |
           pip3 install --upgrade nbconvert
           export JEKYLL_ENV=production
-          bundle exec jekyll build
+          # ветка dev собирается под /preview: иначе абсолютные пути ассетов
+          # ведут на прод и превью показывает чужие стили
+          if [ "${{ github.ref_name }}" = "dev" ]; then
+            bundle exec jekyll build --baseurl /preview
+          else
+            bundle exec jekyll build
+          fi
       - name: Purge unused CSS 🧹
         run: |
           npm install -g purgecss
           purgecss -c purgecss.config.js
       - name: Deploy 🚀
-        if: github.event_name != 'pull_request'
+        if: github.event_name != 'pull_request' && github.ref_name != 'dev'
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: _site
+          # прод не сносит превью, лежащее в соседней папке
+          clean-exclude: preview
+      - name: Deploy preview 🔍
+        if: github.event_name != 'pull_request' && github.ref_name == 'dev'
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: _site
+          target-folder: preview
+          # превью не трогает ничего за пределами своей папки
+          clean: false
