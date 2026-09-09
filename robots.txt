@@ -1,4 +1,4 @@
 User-agent: *
-Disallow:
+Disallow: /preview/
 
 Sitemap: https://soxoj.com/sitemap.xml
