@@ -99,7 +99,7 @@ scopus_id: # your profile on Scopus
 semanticscholar_id: # your Semantic Scholar ID
 spotify_id: # your spotify id
 stackoverflow_id: # your stackoverflow id
-telegram_username: soxoj # your Telegram user name
+telegram_username: soxoj_insides # channel, not personal DM: it is the more public surface
 unsplash_id: # your unsplash id
 wechat_qr: # filename of your wechat qr-code saved as an image (e.g., wechat-qr.png if saved to assets/img/wechat-qr.png)
 whatsapp_number: # your WhatsApp number (full phone number in international format. Omit any zeroes, brackets, or dashes when adding the phone number in international format.)
@@ -111,7 +111,7 @@ youtube_id: # your youtube channel id (youtube.com/@<youtube_id>)
 zotero_username: # your zotero username
 
 contact_note: >
-  The fastest ways to contact me are to DM me on Telegram or mail me at soxoj@protonmail.com.
+  The fastest ways to contact me are to <a href="https://t.me/soxoj">DM me on Telegram</a> or mail me at soxoj@protonmail.com.
 
 # -----------------------------------------------------------------------------
 # Analytics and search engine verification
