@@ -194,8 +194,9 @@ collections:
     output: true
     permalink: /:collection/:title/
   projects:
-    output: true
-    permalink: /:collection/:title/
+    # tiles link out via redirect and have no pages of their own:
+    # with output: true each would generate an empty page in the sitemap
+    output: false
 
 announcements:
   enabled: false

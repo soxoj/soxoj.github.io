@@ -181,6 +181,33 @@ ul.task-list input[type="checkbox"] {
   .card-body {
     padding: 1.25rem 1.25rem 1.25rem 1.25rem;
   }
+
+  // Project tile: square preview on the left, text on the right.
+  .project-card {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+
+    .project-thumb {
+      flex: 0 0 auto;
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+
+    // without this a long word in the description blows out the flex column
+    .project-card-text {
+      min-width: 0;
+    }
+
+    // h2 is kept for heading structure, but its browser default size is too
+    // large for a tile; the margin goes too, or a 1rem hole opens under it
+    .card-title {
+      font-size: 1.1rem;
+      margin-bottom: 0.35rem;
+    }
+  }
 }
 
 // Citation

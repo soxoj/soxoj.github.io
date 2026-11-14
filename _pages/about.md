@@ -18,13 +18,15 @@ I am an OSINT specialist with a background in cybersecurity and software develop
 
 ## Some of my projects 🚧
 
-- [Maigret](https://github.com/soxoj/maigret) - collects a dossier on a person by username across 5K sites (37K stars)
+- [Maigret](https://github.com/soxoj/maigret) - collects a dossier on a person by username across 9.5K sites (41K stars)
 - [Telegram Spoiler Decoder](https://soxoj.com/spoiler) - reveals the text hidden behind a Telegram spoiler
 - [SOWEL](https://soxoj.com/sowel) - social media intelligence mapped as a knowledge base of weaknesses
 - [telegram-bot-dumper](https://github.com/soxoj/telegram-bot-dumper) - magically dumps all Telegram bot messages by its token + web version
 - [OSINT namecheckers list](https://github.com/soxoj/osint-namecheckers-list) - every tool that checks accounts by username
 - [Counter-OSINT & privacy guide](https://github.com/soxoj/counter-osint-guide-en) [[RU]](https://github.com/soxoj/counter-osint-guide-ru) - protecting your personal information
 - [Adana](https://soxoj.com/adana) - 1-click analytical dashboard, Bellingcat hackathon project
+
+Other people build their own bots, apps and integrations on Maigret — [see what runs on it](https://soxoj.com/built-on-maigret/).
 
 Currently, I am the Chief Product Officer (CPO) at [Social Links](https://sociallinks.io/), where I am building the most advanced investigation platform in the world. I originally joined the company by founding the [OSINT Center of Excellence](https://soxoj.substack.com/p/2023-osint-recap-center-of-excellence), an expert department that conducts investigations, teaches OSINT, and develops new methods and professional investigation tools.
 

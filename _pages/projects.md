@@ -2,13 +2,13 @@
 layout: page
 title: projects
 permalink: /projects/
-description: A growing collection of your cool projects.
-nav: false
+description: Tools and projects I built.
+nav: true
 nav_order: 3
-sitemap: false # пустая заготовка: не отдаём в поиск, пока не заполнена
-display_categories: [work, fun]
 horizontal: false
 ---
+
+This list is not complete — see my other projects on [GitHub](https://github.com/soxoj?tab=repositories).
 
 <!-- pages/projects.md -->
 <div class="projects">
@@ -30,7 +30,7 @@ horizontal: false
     </div>
   </div>
   {% else %}
-  <div class="row row-cols-1 row-cols-md-3">
+  <div class="row row-cols-1 row-cols-md-2">
     {% for project in sorted_projects %}
       {% include projects.liquid %}
     {% endfor %}
@@ -56,7 +56,7 @@ horizontal: false
     </div>
   </div>
   {% else %}
-  <div class="row row-cols-1 row-cols-md-3">
+  <div class="row row-cols-1 row-cols-md-2">
     {% for project in sorted_projects %}
       {% include projects.liquid %}
     {% endfor %}
