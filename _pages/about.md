@@ -18,7 +18,7 @@ I am an OSINT specialist with a background in cybersecurity and software develop
 
 ## Some of my projects 🚧
 
-- [Maigret](https://github.com/soxoj/maigret) - collects a dossier on a person by username across 5K sites (37K stars)
+- [Maigret](https://github.com/soxoj/maigret) - collects a dossier on a person by username across 9.5K sites (41K stars)
 - [Telegram Spoiler Decoder](https://soxoj.com/spoiler) - reveals the text hidden behind a Telegram spoiler
 - [SOWEL](https://soxoj.com/sowel) - social media intelligence mapped as a knowledge base of weaknesses
 - [telegram-bot-dumper](https://github.com/soxoj/telegram-bot-dumper) - magically dumps all Telegram bot messages by its token + web version
