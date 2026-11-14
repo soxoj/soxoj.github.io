@@ -26,6 +26,8 @@ I am an OSINT specialist with a background in cybersecurity and software develop
 - [Counter-OSINT & privacy guide](https://github.com/soxoj/counter-osint-guide-en) [[RU]](https://github.com/soxoj/counter-osint-guide-ru) - protecting your personal information
 - [Adana](https://soxoj.com/adana) - 1-click analytical dashboard, Bellingcat hackathon project
 
+Other people build their own bots, apps and integrations on Maigret — [see what runs on it](https://soxoj.com/built-on-maigret/).
+
 Currently, I am the Chief Product Officer (CPO) at [Social Links](https://sociallinks.io/), where I am building the most advanced investigation platform in the world. I originally joined the company by founding the [OSINT Center of Excellence](https://soxoj.substack.com/p/2023-osint-recap-center-of-excellence), an expert department that conducts investigations, teaches OSINT, and develops new methods and professional investigation tools.
 
 I was born in Kharkiv, Ukraine, and have lived in Kursk and Moscow, Russia. Now I live in Amsterdam, Netherlands. I first got into open-source intelligence during my student years in 2015, engaging in CTFs and ARGs and developing [information-gathering and processing tools](https://github.com/stars/soxoj/lists/my-osint-tools). I have experience in anti-bot and anti-fraud protection, penetration testing, programming (Python, Go, Lua), product management, establishing development workflows (Scrum, Kanban), and managing teams.
